@@ -39,7 +39,7 @@ A comprehensive web application for managing a barbershop in Ethiopia with multi
 
 ### Backend
 - **Node.js** with Express
-- **MongoDB** with Mongoose
+- **MySQL** with Sequelize ORM
 - **JWT** for authentication
 - **Bcrypt** for password hashing
 - **Nodemailer** for email notifications
@@ -51,7 +51,7 @@ A comprehensive web application for managing a barbershop in Ethiopia with multi
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- MongoDB (local or Atlas)
+- MySQL (v8.0 or higher)
 - npm or yarn
 
 ### Backend Setup
@@ -74,12 +74,46 @@ cp .env.example .env
 4. Configure environment variables in `.env`:
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/barbershop
+NODE_ENV=development
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=barbershop
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+
+# JWT Configuration
 JWT_SECRET=your_secret_key_here
-# Add other configuration as needed
+JWT_EXPIRE=7d
+
+# Frontend URL
+FRONTEND_URL=http://localhost:5173
+
+# Email Configuration (Optional)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+
+# Twilio Configuration (Optional)
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=your_phone_number
+TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 ```
 
-5. Start the server:
+5. Create the MySQL database:
+```sql
+CREATE DATABASE barbershop;
+```
+
+6. Seed the database with sample data:
+```bash
+node seed-direct.js
+```
+
+7. Start the server:
 ```bash
 # Development
 npm run dev
@@ -202,7 +236,8 @@ Translation files are located in `frontend/src/i18n/locales/`.
 
 1. Set environment variables on your hosting platform
 2. Deploy the backend folder
-3. Ensure MongoDB connection is configured
+3. Ensure MySQL database is configured and accessible
+4. Run database migrations/seed scripts
 
 ### Frontend Deployment (Vercel/Netlify)
 
@@ -241,9 +276,21 @@ YOUTUBE_API_KEY=your_api_key
 YOUTUBE_CHANNEL_ID=your_channel_id
 ```
 
-## Default Admin Account
+## Default Test Accounts
 
-After seeding the database, you can create an admin account manually or through the registration with role modification.
+After seeding the database with `node seed-direct.js`, you can use these test accounts:
+
+**Admin Account:**
+- Email: `admin@barbershop.com`
+- Password: `admin123`
+
+**Staff Account (Barber):**
+- Email: `abebe@barbershop.com`
+- Password: `staff123`
+
+**Customer Account:**
+- Email: `dawit@example.com`
+- Password: `customer123`
 
 ## Contributing
 
