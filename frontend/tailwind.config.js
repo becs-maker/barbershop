@@ -8,22 +8,35 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#fbf7ef',
+          100: '#f5ebd8',
+          200: '#e9d3ad',
+          300: '#dbb67a',
+          400: '#cd984f',
+          500: '#b88238',
+          600: '#9c682b',
+          700: '#7d5024',
+          800: '#664222',
+          900: '#55371f',
+        },
+        charcoal: {
+          700: '#272b30',
+          800: '#1b1e22',
+          900: '#121417',
+          950: '#0b0c0e',
+        },
+        stone: {
+          50: '#faf8f5',
+          100: '#f3efe8',
+          200: '#e6dfd3',
         },
       },
       fontFamily: {
-        'amharic': ['Noto Sans Ethiopic', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Noto Sans Ethiopic', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        amharic: ['Noto Sans Ethiopic', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
+};

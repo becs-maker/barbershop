@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Clock } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { Clock, Scissors } from 'lucide-react';
 import api from '../utils/api';
+import { DEMO_SERVICES } from '../data/demoData';
 
 const Services = () => {
   const { t, i18n } = useTranslation();
@@ -20,11 +20,13 @@ const Services = () => {
   const fetchServices = async () => {
     try {
       const response = await api.get('/services');
-      if (response.data.success) {
+      if (response.data.success && Array.isArray(response.data.services) && response.data.services.length > 0) {
         setServices(response.data.services);
+      } else {
+        setServices(DEMO_SERVICES);
       }
-    } catch (error) {
-      toast.error('Failed to load services');
+    } catch {
+      setServices(DEMO_SERVICES);
     } finally {
       setLoading(false);
     }
@@ -32,7 +34,7 @@ const Services = () => {
 
   const filteredServices = selectedCategory === 'all'
     ? services
-    : services.filter(service => service.category === selectedCategory);
+    : services.filter((service) => service.category === selectedCategory);
 
   const getServiceName = (service) => {
     if (!service || !service.name) return '';
@@ -48,34 +50,38 @@ const Services = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-stone-50 py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs uppercase tracking-[0.2em] text-primary-600 font-bold">
+            Service Menu
+          </span>
+          <h1 className="font-serif text-4xl font-bold text-charcoal-900 mt-2 mb-4">
             {t('services.title')}
           </h1>
-          <p className="text-lg text-gray-600">
-            Professional grooming services tailored to your needs
+          <p className="text-gray-600 text-lg">
+            Crafted grooming for kids, teens, young adults, and classic gentlemen.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-2.5 mb-12">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium transition-colors ${
+              type="button"
+              className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                 selectedCategory === category
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? 'bg-charcoal-900 text-white shadow-sm'
+                  : 'bg-white border border-stone-200 text-charcoal-700 hover:border-primary-400'
               }`}
             >
               {category === 'all' ? 'All' : t(`services.${category}`)}
@@ -84,49 +90,59 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {filteredServices.map((service) => (
-            <div key={service.id} className="card-hover">
-              {service.image && (
-                <img
-                  src={service.image}
-                  alt={getServiceName(service)}
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
-              )}
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-semibold text-gray-900">
+            <div key={service.id} className="card-hover flex flex-col justify-between">
+              <div>
+                {service.image ? (
+                  <img
+                    src={service.image}
+                    alt={getServiceName(service)}
+                    className="w-full h-48 object-cover rounded-xl mb-4"
+                  />
+                ) : (
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="w-11 h-11 rounded-xl bg-charcoal-900 text-primary-300 flex items-center justify-center">
+                      <Scissors size={20} />
+                    </span>
+                    <span className="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                      {t(`services.${service.category}`)}
+                    </span>
+                  </div>
+                )}
+
+                <h3 className="text-xl font-bold text-charcoal-900 mb-2">
                   {getServiceName(service)}
                 </h3>
-                <span className="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-sm font-medium">
-                  {t(`services.${service.category}`)}
-                </span>
+                <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                  {getServiceDescription(service)}
+                </p>
               </div>
-              <p className="text-gray-600 mb-4">
-                {getServiceDescription(service)}
-              </p>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center text-gray-500">
-                  <Clock size={18} className="mr-1" />
-                  <span>{service.duration} {t('booking.minutes')}</span>
+
+              <div>
+                <div className="flex items-center justify-between pt-4 border-t border-stone-100 mb-4">
+                  <div className="flex items-center text-gray-500 text-sm font-medium">
+                    <Clock size={16} className="mr-1.5 text-primary-600" />
+                    <span>{service.duration} {t('booking.minutes')}</span>
+                  </div>
+                  <span className="text-2xl font-bold text-charcoal-900">
+                    {service.price} <span className="text-xs font-semibold text-primary-700">ETB</span>
+                  </span>
                 </div>
-                <span className="text-2xl font-bold text-primary-600">
-                  {service.price} ETB
-                </span>
+                <Link
+                  to={`/booking?service=${service.id}`}
+                  className="btn-primary w-full text-center text-sm"
+                >
+                  {t('services.bookService')}
+                </Link>
               </div>
-              <Link
-                to={`/booking?service=${service.id}`}
-                className="btn-primary w-full text-center"
-              >
-                {t('services.bookService')}
-              </Link>
             </div>
           ))}
         </div>
 
         {filteredServices.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No services found in this category</p>
+          <div className="text-center py-14 bg-white rounded-2xl border border-stone-200 max-w-md mx-auto">
+            <p className="text-gray-500">No services found in this category.</p>
           </div>
         )}
       </div>

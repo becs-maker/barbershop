@@ -1,72 +1,81 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Facebook, Youtube, Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* About */}
+    <footer className="bg-charcoal-950 text-gray-300 border-t border-charcoal-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Brand */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Barbershop</h3>
-            <p className="text-gray-400 text-sm">
-              {t('home.subtitle')}
+            <h3 className="text-xl font-serif font-bold text-white mb-3">
+              Addis Crown Barbershop
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              {t('home.subtitle')}. Precision cuts, classic shaves, and welcoming hospitality for boys, teens, and gentlemen.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">{t('nav.services')}</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="/services" className="hover:text-white transition-colors">{t('services.haircut')}</a></li>
-              <li><a href="/services" className="hover:text-white transition-colors">{t('services.shave')}</a></li>
-              <li><a href="/services" className="hover:text-white transition-colors">{t('services.styling')}</a></li>
-              <li><a href="/services" className="hover:text-white transition-colors">{t('services.treatment')}</a></li>
+            <h4 className="text-xs uppercase tracking-[0.18em] text-primary-300 font-semibold mb-4">
+              {t('nav.services')}
+            </h4>
+            <ul className="space-y-2.5 text-sm text-gray-400">
+              <li><Link to="/services" className="hover:text-white transition-colors">{t('services.haircut')}</Link></li>
+              <li><Link to="/services" className="hover:text-white transition-colors">{t('services.shave')}</Link></li>
+              <li><Link to="/services" className="hover:text-white transition-colors">{t('services.styling')}</Link></li>
+              <li><Link to="/barbers" className="hover:text-white transition-colors">{t('nav.barbers')}</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li className="flex items-center space-x-2">
-                <Phone size={16} />
+            <h4 className="text-xs uppercase tracking-[0.18em] text-primary-300 font-semibold mb-4">
+              Visit &amp; Contact
+            </h4>
+            <ul className="space-y-2.5 text-sm text-gray-400">
+              <li className="flex items-center gap-2.5">
+                <Phone size={15} className="text-primary-400 shrink-0" />
                 <span>+251 911 234 567</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <Mail size={16} />
+              <li className="flex items-center gap-2.5">
+                <Mail size={15} className="text-primary-400 shrink-0" />
                 <span>info@barbershop.et</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <MapPin size={16} />
-                <span>Addis Ababa, Ethiopia</span>
+              <li className="flex items-center gap-2.5">
+                <MapPin size={15} className="text-primary-400 shrink-0" />
+                <span>Bole, Addis Ababa, Ethiopia</span>
               </li>
             </ul>
           </div>
 
-          {/* Social Media */}
+          {/* Hours */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Facebook size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Youtube size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                </svg>
-              </a>
-            </div>
+            <h4 className="text-xs uppercase tracking-[0.18em] text-primary-300 font-semibold mb-4">
+              Hours
+            </h4>
+            <ul className="space-y-2.5 text-sm text-gray-400">
+              <li className="flex items-center gap-2.5">
+                <Clock size={15} className="text-primary-400 shrink-0" />
+                <span>Tue – Sat: 8:00 AM – 8:30 PM</span>
+              </li>
+              <li className="pl-6">Sun: 9:00 AM – 6:00 PM</li>
+              <li className="pt-1">
+                <Link to="/booking" className="text-primary-300 hover:text-primary-200 font-semibold text-sm">
+                  {t('home.bookNow')} →
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Barbershop Ethiopia. All rights reserved.</p>
+        <div className="border-t border-charcoal-800 mt-10 pt-7 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+          <p>&copy; {new Date().getFullYear()} Addis Crown Barbershop. All rights reserved.</p>
+          <p>Classic Craft · Modern Style · All Ages</p>
         </div>
       </div>
     </footer>
